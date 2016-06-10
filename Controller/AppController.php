@@ -51,7 +51,7 @@ class AppController extends Controller {
     );
 
     public function beforeFilter() {
-       // $this->Auth->allow('index');
+   //     $this->Auth->allow('index');
 //        $this->Auth->fields = array('name' => 'name', 'password' => 'password');
     }
 

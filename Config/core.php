@@ -362,3 +362,14 @@ Cache::config('_cake_model_', array(
 Configure::write('User.time_limit', 1800);
 Configure::write('User.is_active', 1);
 Configure::write('Login.check_minlengpass', 6);
+
+Configure::write('Category.list_default', array(
+    0 => array(
+        0 => 'Salary',
+        1 => 'Bonus'
+    ),
+    1 => array(
+        0 => 'Shopping',
+        1 => 'Go market'
+    )
+));

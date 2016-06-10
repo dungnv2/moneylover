@@ -15,7 +15,16 @@ class UsersController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('register', 'login', 'logout', 'activate');
+        $this->Auth->allow('register', 'login', 'logout', 'activate','edit');
+    }
+
+    public function index() {
+        $this->layout = 'default_personal_layout';
+//        $this->set('users',  $this->User->find('all'));
+       
+     $this->set('users', $this->Auth->user());
+     
+   //  debug($this->Auth->user());die;
     }
 
     function register() {
@@ -51,7 +60,7 @@ class UsersController extends AppController {
     //check if the token is valid
     function activate($userId, $email) {
         // lay gia tri , null là tham so truyền vào, nếu để null lấy ra tất cả 
-        $user = $this->User->read(null, $userId); 
+        $user = $this->User->read(null, $userId);
         App::uses('CakeTime', 'Utility');
 
         if (empty($user) || $email !== sha1($user['User']['email']) || CakeTime::isPast(strtotime($user['User']['created']) + Configure::read('User.time_limit'))) {
@@ -66,7 +75,6 @@ class UsersController extends AppController {
     }
 
     public function login() {
-               
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 $results = $this->User->find('first', array(
@@ -75,12 +83,12 @@ class UsersController extends AppController {
                         'User.status' => Configure::read('User.is_active'),
                     )
                 ));
-                
+
                 if ($results) {
-                    // tai khoan da duoc active status = 1
+                    // tai khoan active status = 1
                     return $this->redirect($this->Auth->redirectUrl());
                 } else {
-                    // tai khoan chua duoc active status = 0
+                    // tai khoan chua  active status = 0
                     $this->Session->setFlash('Your account has not been activated. Please check your email.');
                     $this->Auth->logout();
                     return $this->redirect(array('controller' => 'homes', 'action' => 'index'));
@@ -95,7 +103,30 @@ class UsersController extends AppController {
     function logout() {
         $this->redirect($this->Auth->logout());
     }
+    public function profile(){
+        $this->layout = 'default_personal_layout';
+        $this->set('users', $this->Auth->user());
+        //debug($this->Auth->user()); die;
+        
+    }
 
+    public function edit(){
+       if ($this->request->is('post')) {
+         $this->Post->create();
+            $filename = WWW_ROOT. DS . 'documents'.DS.$this->request->data['post']['avatar']['name']; 
+           move_uploaded_file($this->data['posts']['avatar']['tmp_name'],$filename);
+
+
+
+         if ($this->Post->save($this->request->data)) {
+             $this->Session->setFlash('Your post has been saved.');
+             $this->redirect(array('action' => 'index'));
+         } else {
+            $this->Session->setFlash('Unable to add your post.');
+         }
+     }
+        
+    }
 }
 
 ?>
