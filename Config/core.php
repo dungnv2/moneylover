@@ -362,7 +362,16 @@ Cache::config('_cake_model_', array(
 Configure::write('User.time_limit', 1800);
 Configure::write('User.is_active', 1);
 Configure::write('Login.check_minlengpass', 6);
+Configure::write('Link.profile', 'http://192.168.56.57/moneylover/users/profile');
+Configure::write('Link.front_page', 'http://192.168.56.57/moneylover');
+Configure::write('Link.wallet_manage', 'http://192.168.56.57/moneylover/wallets');
+Configure::write('Link.category_manage', 'http://192.168.56.57/moneylover/categories');
+Configure::write('Link.transfer_manage', 'http://192.168.56.57/moneylover/transfers');
 
+Configure::write('Category.type',array(
+    1=>'Thu',
+    0=>'Chi'
+));
 Configure::write('Category.list_default', array(
     0 => array(
         0 => 'Salary',

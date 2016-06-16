@@ -1,6 +1,19 @@
 
 <div id="left-contain" class="col-sm-9">
+    <?php
+   // echo $users['User']['name'];
+    if($users){
+         echo $this->Html->link(
+                    'Your profile',
+                    array('controller'=>'users', 'action'=>'profile'));        
+    } 
+    else { 
+         echo "Please register and login to use the product";
+    }
+    ?>
+    <br>
             <?php echo "introduce about website";?>
+    
 </div>
 <div id="right-contain" class="col-sm-3">
         <?php //form dang nhap ?>

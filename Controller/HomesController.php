@@ -28,7 +28,7 @@ class HomesController extends AppController {
      *
      * @var array
      */
-    public $uses = array();
+    public $uses = array('User');
 
     /**
      * Displays a view
@@ -45,7 +45,13 @@ class HomesController extends AppController {
 //        $Email->to('dungnv@rikkeisoft.com');
 //        $Email->subject('Test');
 //        $Email->send('My message');
-      
+        $this->set('users', $this->User->find('first', array(
+                    'conditions' => array(
+                        'User.id' => $this->Auth->user('id'))
+        )));
+//        if ($this->Auth->user()) {
+//            $this->redirect(array('controller' => 'users', 'action' => 'profile'));
+//        }
     }
 
 }

@@ -14,6 +14,33 @@ class User extends AppModel {
 
     public $name = 'User';
     public $validate = array(
+//    'current_password' => array(
+//        'rule' => 'checkCurrentPassword',
+//        'message' => 'Wrong current pass',
+//    ),
+//    'newpassword' => array(
+//        'length' => array(
+//                'rule' => array('minLength', 6),
+//                'message' => 'Your password must be between 8 and 40 characters.'
+//            ),
+//        
+//    ),
+//    'renewpassword' => array(
+//        'length' => array(
+//                'rule' => array('minLength', 6),
+//                'message' => 'Your password must be between 8 and 40 characters.'
+//            ),
+//        ),
+//        're_password' => array(
+//            'length' => array(
+//                'rule' => array('minLength', 6),
+//                'message' => 'Your password must be between 8 and 40 characters.'
+//            ),
+//            'compare' => array(
+//                'rule' => array('passwordsMatch'),
+//                'message' => 'The passwords you entered do not match.',
+//            )
+//    ),
         'email' => array(
             'required' => array(
                 'rule' => 'notBlank',
@@ -57,8 +84,13 @@ class User extends AppModel {
             )
         ),
     );
-
-    public function validatePasswords() {
+    public function checkCurrentPassword() {
+        
+    }
+    public function passwordsMatch() {
+        return $this->data[$this->alias]['newpassword'] === $this->data[$this->alias]['renewpassword'];
+    }
+     public function validatePasswords() {
         return $this->data[$this->alias]['password'] === $this->data[$this->alias]['re_password'];
     }
     public function isUniqueEmail() {
